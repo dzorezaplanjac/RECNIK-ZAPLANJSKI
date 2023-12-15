@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Hindi-English bilingual dictionary</title>
+</head>
+
+<body>
+    <div id="heading-div">
+        <h1 id="heading">Hindi-English bilingual dictionary</h1>
+    </div>
+    <div id="app">
+        <div id="search-section">
+            <div id="heading-div2">
+                <h2 id="heading2">Search Word</h2>
+            </div>
+            <label for="searchWord">Search:</label>
+            <input type="text" id="searchWord" oninput="searchWord()">
+
+            <div id="searchResults"></div>
+        </div>
+        <div id="input-section">
+            <div id="heading-div2">
+                <h2 id="heading2">Add Word</h2>
+            </div>
+            <label for="englishWord">English Word:</label>
+            <input type="text" id="englishWord">
+
+            <label for="hindiWord">Hindi Word:</label>
+            <input type="text" id="hindiWord">
+
+            <label for="hindimeanings">Hindi-Meanings:</label>
+            <textarea id="hindimeanings"></textarea>
+
+            <label for="englishmeanings">English-Meanings:</label>
+            <textarea id="englishmeanings"></textarea>
+
+            <label for="examples">Examples:</label>
+            <textarea id="examples"></textarea>
+
+            <label for="pronunciation">Pronunciation:</label>
+            <input type="text" id="pronunciation">
+            <div id="btnDiv">
+                <button id="addButton" onclick="addWord()">Add Word</button>
+                <button onclick="commitToGitHub()">Commit Progress to GitHub</button>
+            </div>
+        </div>
+        <div id="dictionary">
+            <div id="heading-div2">
+                <h2 id="heading2">Saved Entries</h2>
+            </div>
+            <ul id="wordList"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
