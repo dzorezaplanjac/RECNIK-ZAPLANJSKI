@@ -110,7 +110,7 @@ function displaySearchResults(results) {
     searchResultsContainer.appendChild(resultItem);
   });
 }
-const githubToken = secrets.SECRET_TOKEN;
+const githubToken = secrets_SECRET_TOKEN;
 const repoOwner = 'DeepteshChaudhari';
 const repoName = 'internship-task';
 const branchName = 'main';
