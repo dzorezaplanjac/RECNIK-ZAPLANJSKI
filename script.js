@@ -6,67 +6,142 @@ if (localStorage.getItem('dictionary')) {
   displayWords();
 }
 
-function addWord() {
-  const englishWord = document.getElementById('englishWord').value;
-  const hindiWord = document.getElementById('hindiWord').value;
-  const hindimeanings = document.getElementById('hindimeanings').value;
-  const englishmeanings = document.getElementById('englishmeanings').value;
-  const examples = document.getElementById('examples').value;
-  const pronunciation = document.getElementById('pronunciation').value;
+// Variable to track the edited word (if any)
+let editedWordIndex = -1;
 
-  const newWord = {
-    english: englishWord,
-    hindi: hindiWord,
-    hindimeanings: hindimeanings,
-    englishmeanings: englishmeanings,
-    examples: examples,
-    pronunciation: pronunciation
-  };
+// Function to add or update a word
+function addOrUpdateWord() {
+  const englishWord = document.getElementById('englishWord').value.trim();
+  const hindiWord = document.getElementById('hindiWord').value.trim();
+  const hindimeanings = document.getElementById('hindimeanings').value.trim();
+  const englishmeanings = document.getElementById('englishmeanings').value.trim();
+  const examples = document.getElementById('examples').value.trim();
+  const pronunciation = document.getElementById('pronunciation').value.trim();
 
-  const existingWordIndex = dictionary.findIndex(word => word.english === englishWord || word.hindi === hindiWord);
-
-  if (existingWordIndex !== -1) {
-    if (confirm('Word already exists. Do you want to update the existing entry?')) {
-      dictionary[existingWordIndex] = newWord;
-    }
-  } else {
-    dictionary.push(newWord);
+  // Check for duplicate entry
+  const existingEntry = dictionary.find(entry => entry.englishWord.toLowerCase() === englishWord.toLowerCase() || entry.hindiWord === hindiWord);
+  
+  if (existingEntry && editedWordIndex === -1) {
+    alert('This word already exists. You can update the existing entry.');
+    return;
   }
 
-  saveToLocalStorage();
+  // Add or update the word in the dictionary
+  const wordData = { englishWord, hindiWord, hindimeanings, englishmeanings, examples, pronunciation };
+
+  if (editedWordIndex === -1) {
+    // Add new word
+    dictionary.push(wordData);
+  } else {
+    // Update existing word
+    dictionary[editedWordIndex] = wordData;
+
+    // Reset the edited word index after update
+    editedWordIndex = -1;
+    document.getElementById('discardButton').style.display = 'none';
+  }
+
+  // Clear the form
+  clearForm();
+
+  // Change the button label and function based on the state
+  const submitButton = document.getElementById('submitButton');
+  submitButton.textContent = 'Add Word';
+  submitButton.onclick = addOrUpdateWord;
+
+  // save data on local storage
+  saveToLocalStorage()
+  // Display the updated entries
   displayWords();
 }
 
+// ...
+
+// Function to edit a word
+function editWord(index) {
+  // Set the edited word index
+  editedWordIndex = index;
+
+  // Populate the form with the existing data
+  const wordData = dictionary[index];
+  document.getElementById('englishWord').value = wordData.englishWord;
+  document.getElementById('hindiWord').value = wordData.hindiWord;
+  document.getElementById('hindimeanings').value = wordData.hindimeanings;
+  document.getElementById('englishmeanings').value = wordData.englishmeanings;
+  document.getElementById('examples').value = wordData.examples;
+  document.getElementById('pronunciation').value = wordData.pronunciation;
+
+  // Change the button label and function for update
+  const submitButton = document.getElementById('submitButton');
+  submitButton.textContent = 'Update Word';
+  submitButton.onclick = addOrUpdateWord;
+
+  // Show the Discard button
+  document.getElementById('discardButton').style.display = 'inline-block';
+}
+
+// Function to discard changes
+function discardChanges() {
+  // Clear the form
+  clearForm();
+
+  // Change the button label and function based on the state
+  const submitButton = document.getElementById('submitButton');
+  submitButton.textContent = 'Add Word';
+  submitButton.onclick = addOrUpdateWord;
+
+  // Hide the Discard button
+  document.getElementById('discardButton').style.display = 'none';
+
+  // Reset the edited word index
+  editedWordIndex = -1;
+}
+
+
+// Function to clear the form
+function clearForm() {
+document.getElementById('englishWord').value = '';
+document.getElementById('hindiWord').value = '';
+document.getElementById('hindimeanings').value = '';
+document.getElementById('englishmeanings').value = '';
+document.getElementById('examples').value = '';
+document.getElementById('pronunciation').value = '';
+}
+
+// Function to delete a word
 function deleteWord(index) {
-  if (confirm('Are you sure you want to delete this entry?')) {
+  // Confirm deletion with the user
+  const confirmation = confirm('Are you sure you want to delete this word?');
+
+  if (confirmation) {
+    // Remove the word from the dictionary
     dictionary.splice(index, 1);
+    // save data on local storage
     saveToLocalStorage();
+    // Display the updated entries
     displayWords();
   }
 }
-
-function editWord(index) {
-  const word = dictionary[index];
-  document.getElementById('englishWord').value = word.english;
-  document.getElementById('hindiWord').value = word.hindi;
-  document.getElementById('hindimeanings').value = word.hindimeanings;
-  document.getElementById('englishmeanings').value = word.englishmeanings;
-  document.getElementById('examples').value = word.examples;
-  document.getElementById('pronunciation').value = word.pronunciation;
-
-  // Remove the edited entry
-  dictionary.splice(index, 1);
-  saveToLocalStorage();
-  displayWords();
-}
-
+// function to save data on local storage
 function saveToLocalStorage() {
   localStorage.setItem('dictionary', JSON.stringify(dictionary));
 }
 
+// Function to search for words
 function searchWord() {
-  const searchInput = document.getElementById('searchWord').value.toLowerCase();
-  const searchResults = dictionary.filter(word => word.english.toLowerCase().includes(searchInput) || word.hindi.toLowerCase().includes(searchInput));
+  const searchInput = document.getElementById('searchWord').value.trim().toLowerCase();
+
+  // Check if the backspace key was pressed and the search term is empty
+  if (event && event.inputType === 'deleteContentBackward' && searchInput === '') {
+    return;
+  }
+
+  // Filter entries based on the search term
+  const searchResults = dictionary.filter(entry =>
+    entry.englishWord.toLowerCase().includes(searchInput) || entry.hindiWord.toLowerCase().includes(searchInput)
+  );
+
+  // Display the search results
   displaySearchResults(searchResults);
 }
 
@@ -76,7 +151,7 @@ function displayWords() {
 
   dictionary.forEach((word, index) => {
     const listItem = document.createElement('li');
-    listItem.textContent = `${word.english} (${word.hindi})`;
+    listItem.textContent = `${word.englishWord} (${word.hindiWord})`;
 
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
@@ -100,8 +175,8 @@ function displaySearchResults(results) {
   results.forEach(result => {
     const resultItem = document.createElement('div');
     resultItem.innerHTML = `
-      <p><strong>English:</strong> ${result.english}</p>
-      <p><strong>Hindi:</strong> ${result.hindi}</p>
+      <p><strong>English:</strong> ${result.englishWord}</p>
+      <p><strong>Hindi:</strong> ${result.hindiWord}</p>
       <p><strong>hindimeanings:</strong> ${result.hindimeanings}</p>
       <p><strong>englishmeanings:</strong> ${result.englishmeanings}</p>
       <p><strong>Examples:</strong> ${result.examples}</p>
@@ -109,43 +184,4 @@ function displaySearchResults(results) {
     `;
     searchResultsContainer.appendChild(resultItem);
   });
-}
-const githubToken = secrets_SECRET_TOKEN;
-const repoOwner = 'DeepteshChaudhari';
-const repoName = 'internship-task';
-const branchName = 'main';
-
-function commitToGitHub() {
-  const commitMessage = prompt('Enter commit message:');
-
-  if (!commitMessage) {
-    alert('Commit message cannot be empty.');
-    return;
-  }
-
-  const commitData = {
-    message: commitMessage,
-    content: btoa(JSON.stringify(dictionary)), // encode data as base64
-    branch: branchName,
-  };
-
-  fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/dictionary.json`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `token ${githubToken}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
-    body: JSON.stringify(commitData),
-  })
-    .then(response => {
-      if (response.ok) {
-        alert('Progress committed successfully!');
-      } else {
-        alert('Error committing progress. Please check your token and repository details.');
-      }
-    })
-    .catch(error => {
-      console.error('Error committing progress:', error);
-      alert('An error occurred while committing progress.');
-    });
 }

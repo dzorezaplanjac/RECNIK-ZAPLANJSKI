@@ -44,8 +44,10 @@
             <label for="pronunciation">Pronunciation:</label>
             <input type="text" id="pronunciation">
             <div id="btnDiv">
-                <button id="addButton" onclick="addWord()">Add Word</button>
-                <button onclick="commitToGitHub()">Commit Progress to GitHub</button>
+                <!-- Use a dynamic button label and function name -->
+                <button type="button" id="submitButton" onclick="addOrUpdateWord()">Add Word</button>
+                <button type="button" id="discardButton" onclick="discardChanges()" style="display: none">Discard
+                    Changes</button>
             </div>
         </div>
         <div id="dictionary">
