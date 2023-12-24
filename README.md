@@ -23,7 +23,6 @@ Option to commit progress to a GitHub repository (manual process).
 ## Screenshots
 
 ![Screenshot 1](images/screenshot-Layout.png)
-_Layout_
 
 ## Getting Started
 
