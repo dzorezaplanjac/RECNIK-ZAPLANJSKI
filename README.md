@@ -22,7 +22,7 @@ Option to commit progress to a GitHub repository (manual process).
 
 ## Screenshots
 
-![Screenshot 1](images/screenshot-Layout.png)
+![screenshot-Layout](https://github.com/DeepteshChaudhari/internship-task/assets/92786069/87295695-84cc-4e51-ae47-641ef48a12a3)
 
 ## Getting Started
 
