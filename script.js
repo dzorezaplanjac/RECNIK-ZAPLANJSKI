@@ -6,11 +6,29 @@ if (localStorage.getItem('dictionary')) {
   displayWords();
 }
 
+// Function to validate form inputs
+function validateForm() {
+  const englishWord = document.getElementById('englishWord').value.trim();
+  const hindiWord = document.getElementById('hindiWord').value.trim();
+
+  // Basic validation, check if the required fields are not empty
+  if (!englishWord || !hindiWord) {
+    alert('Please fill out both English and Hindi words.');
+    return false;
+  }
+
+  return true;
+}
+
 // Variable to track the edited word (if any)
 let editedWordIndex = -1;
 
 // Function to add or update a word
 function addOrUpdateWord() {
+  if (!validateForm()) {
+    return;
+  }
+
   const englishWord = document.getElementById('englishWord').value.trim();
   const hindiWord = document.getElementById('hindiWord').value.trim();
   const hindimeanings = document.getElementById('hindimeanings').value.trim();
