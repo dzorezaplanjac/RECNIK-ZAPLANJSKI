@@ -13,7 +13,7 @@ function validateForm() {
 
   // Basic validation, check if the required fields are not empty
   if (!englishWord || !hindiWord) {
-    alert('Please fill out both English and Hindi words.');
+    alert('Molimo vas da popunite oba polja, zaplanjska i srpska reč.');
     return false;
   }
 
@@ -40,7 +40,7 @@ function addOrUpdateWord() {
   const existingEntry = dictionary.find(entry => entry.englishWord.toLowerCase() === englishWord.toLowerCase() || entry.hindiWord === hindiWord);
   
   if (existingEntry && editedWordIndex === -1) {
-    alert('This word already exists. You can update the existing entry.');
+    alert('Ova reč već postoji. Možeš da uneseš ispravke.');
     return;
   }
 
@@ -64,7 +64,7 @@ function addOrUpdateWord() {
 
   // Change the button label and function based on the state
   const submitButton = document.getElementById('submitButton');
-  submitButton.textContent = 'Add Word';
+  submitButton.textContent = 'Dodaj reč';
   submitButton.onclick = addOrUpdateWord;
 
   // save data on local storage
@@ -91,7 +91,7 @@ function editWord(index) {
 
   // Change the button label and function for update
   const submitButton = document.getElementById('submitButton');
-  submitButton.textContent = 'Update Word';
+  submitButton.textContent = 'Zameni reč';
   submitButton.onclick = addOrUpdateWord;
 
   // Show the Discard button
@@ -105,7 +105,7 @@ function discardChanges() {
 
   // Change the button label and function based on the state
   const submitButton = document.getElementById('submitButton');
-  submitButton.textContent = 'Add Word';
+  submitButton.textContent = 'Dodaj reč';
   submitButton.onclick = addOrUpdateWord;
 
   // Hide the Discard button
@@ -129,7 +129,7 @@ document.getElementById('pronunciation').value = '';
 // Function to delete a word
 function deleteWord(index) {
   // Confirm deletion with the user
-  const confirmation = confirm('Are you sure you want to delete this word?');
+  const confirmation = confirm('Da li si siguran da želiš da izbrišeš reč?');
 
   if (confirmation) {
     // Remove the word from the dictionary
@@ -172,11 +172,11 @@ function displayWords() {
     listItem.textContent = `${word.englishWord} (${word.hindiWord})`;
 
     const editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
+    editButton.textContent = 'Uredi';
     editButton.onclick = () => editWord(index);
 
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
+    deleteButton.textContent = 'Izbriši';
     deleteButton.onclick = () => deleteWord(index);
 
     listItem.appendChild(editButton);
