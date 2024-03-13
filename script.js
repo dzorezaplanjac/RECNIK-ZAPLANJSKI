@@ -193,12 +193,12 @@ function displaySearchResults(results) {
   results.forEach(result => {
     const resultItem = document.createElement('div');
     resultItem.innerHTML = `
-      <p><strong>English:</strong> ${result.englishWord}</p>
-      <p><strong>Hindi:</strong> ${result.hindiWord}</p>
-      <p><strong>hindimeanings:</strong> ${result.hindimeanings}</p>
-      <p><strong>englishmeanings:</strong> ${result.englishmeanings}</p>
-      <p><strong>Examples:</strong> ${result.examples}</p>
-      <p><strong>Pronunciation:</strong> ${result.pronunciation}</p>
+      <p><strong>Zaplanjski:</strong> ${result.englishWord}</p>
+      <p><strong>Srpski:</strong> ${result.hindiWord}</p>
+      <p><strong>značenje na srpskom jeziku:</strong> ${result.hindimeanings}</p>
+      <p><strong></strong> ${result.englishmeanings}</p>
+      <p><strong>Primeri:</strong> ${result.examples}</p>
+      <p><strong>Izgovor:</strong> ${result.pronunciation}</p>
     `;
     searchResultsContainer.appendChild(resultItem);
   });
