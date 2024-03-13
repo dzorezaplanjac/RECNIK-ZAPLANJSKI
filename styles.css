@@ -34,7 +34,7 @@ body {
 #dictionary {
   width: 28%;
   color: #fcf6f5;
-  background: #234e70;
+  background: #a55651;
   border-radius: 10px;
   padding: 30px;
 }
@@ -63,7 +63,7 @@ button {
   margin-left: 15px;
   font-size: 20px;
   background-color: #fbf8be;
-  color: #234e70;
+  color: #a55651;
   border: 1px solid #fcf6f5;
   border-radius: 10px;
   cursor: pointer;
@@ -71,7 +71,7 @@ button {
 
 button:hover {
   color: #fbf8be;
-  background: #234e70;
+  background: #a55651;
 }
 p,
 #wordList {
@@ -99,7 +99,7 @@ li {
 #dictionary {
   width: auto;
   color: #fcf6f5;
-  background: #234e70;
+  background: #a55651;
   border-radius: 10px;
   padding: 30px;
   margin-top: 10px;
